@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.shoppingmall.buy.BuyMapper">
+
+    <insert id="insBuy">
+        INSERT INTO t_buy
+        (iproduct, icustomer, quantity)
+        VALUES
+        ( #{iproduct}, #{icustomer}, #{quantity})
+    </insert>
+
+    <select id="selBuyProduct">
+        SELECT C.icustomer, C.nm customerNm,
+        B.ibuy, B.quantity, B.buy_at buyAt,
+        P.iproduct, P.price productPrice, P.main_pic productMainPic, P.nm productNm
+        FROM t_customer C
+        INNER JOIN t_buy B
+        ON C.icustomer = B.icustomer
+        INNER JOIN t_product P
+        ON B.iproduct = P.iproduct
+        WHERE C.icustomer = #{icustomer}
+        ORDER BY B.ibuy DESC
+    </select>
+</mapper>
